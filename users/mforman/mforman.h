@@ -109,7 +109,7 @@ enum mforman_keycodes {
 #define _________________LOWER_L3__________________ KC_F10, KC_F1, KC_F2, KC_F3, XXXXXXX
 #define _____LOWER_THUMB_L_____ _______, _______, _______
 
-#define _________________LOWER_R1__________________ KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX
+#define _________________LOWER_R1__________________ KC_PGUP, KC_BSPC, KC_UP,   KC_DEL,  XXXXXXX
 #define _________________LOWER_R2__________________ KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX
 #define _________________LOWER_R3__________________ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 #define _____LOWER_THUMB_R_____ _______, _______, _______
