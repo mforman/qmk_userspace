@@ -1,3 +1,5 @@
+#include "oled.h"
+#include <stdint.h>
 #include "mforman.h"
 
 uint32_t oled_timer = 0;
@@ -24,14 +26,19 @@ void render_layer_state(void) {
     static const char PROGMEM adjust_layer[]  = {0x20, 0x9d, 0x9e, 0x9f, 0x20, 0x20, 0xbd, 0xbe, 0xbf, 0x20, 0x20, 0xdd, 0xde, 0xdf, 0x20, 0};
     static const char PROGMEM mouse_layer[]   = {0x20, 0x97, 0x98, 0x99, 0x20, 0x20, 0xb7, 0xb8, 0xb9, 0x20, 0x20, 0xda, 0xdb, 0xdc, 0x20, 0};
     if (layer_state_is(_ADJUST)) {
+        oled_write_P(PSTR("ADJST"), false);
         oled_write_P(adjust_layer, false);
     } else if (layer_state_is(_LOWER)) {
+        oled_write_P(PSTR("LOWER"), false);
         oled_write_P(lower_layer, false);
     } else if (layer_state_is(_RAISE)) {
+        oled_write_P(PSTR("RAISE"), false);
         oled_write_P(raise_layer, false);
     } else if (layer_state_is(_MOUSE)) {
+        oled_write_P(PSTR("MOUSE"), false);
         oled_write_P(mouse_layer, false);
     } else {
+        oled_write_P(PSTR("BASE "), false);
         oled_write_P(default_layer, false);
     }
 }
@@ -264,8 +271,16 @@ void render_keylock_status(led_t led_usb_state) {
     }
 }
 
+#ifdef WPM_ENABLE
+void render_wpm(uint8_t wpm) {
+    char wpm_str[6];                                  // Buffer to hold the formatted string, including the null terminator.
+    snprintf(wpm_str, sizeof(wpm_str), " %3d ", wpm); // Format the WPM with padding.
+    oled_write_P(PSTR(" WPM "), false);
+    oled_write(wpm_str, false); // Write the formatted string to the OLED.
+}
+#endif
+
 void render_status_main(void) {
-    render_space();
     render_layer_state();
     render_space();
     render_space();
@@ -287,6 +302,10 @@ void render_status_main(void) {
     }
 #endif
     render_keylock_status(host_keyboard_led_state());
+    render_space();
+#ifdef WPM_ENABLE
+    render_wpm(get_current_wpm());
+#endif
 }
 
 void render_status_secondary(void) {

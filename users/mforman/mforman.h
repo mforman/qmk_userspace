@@ -78,7 +78,7 @@ enum tap_dances {
 
 // clang-format off
 #define ______BASE_THUMB_L______ TC_GUI, TC_SPC, TC_TAB
-#define ______BASE_THUMB_R______ TC_ENT, KC_LSFT, TC_OPT
+#define ______BASE_THUMB_R______ TC_ENT, OSM_SFT, TC_OPT
 
 #define _________________COLEMAK_L1________________ KC_Q, KC_W, KC_F, KC_P, KC_B
 #define _________________COLEMAK_L2________________ MT_A, MT_R, MT_S, MT_T, KC_G

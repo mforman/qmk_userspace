@@ -16,6 +16,9 @@ void render_modifiers(uint8_t modifiers);
 void render_status_main(void);
 void render_status_secondary(void);
 
+#ifdef WPM_ENABLE
+void render_wpm(uint8_t wpm);
+#endif
 #ifdef RGB_MATRIX_ENABLE
 const char *rgb_matrix_anim_oled_text(uint8_t mode);
 #endif
