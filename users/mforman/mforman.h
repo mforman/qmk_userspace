@@ -95,7 +95,7 @@ enum tap_dances {
 
 #define _________________LOWER_R1__________________ KC_PGUP, TD(NAV_BSPC), TD(NAV_UP),   TD(NAV_DEL),  XXXXXXX
 #define _________________LOWER_R2__________________ KC_PGDN, TD(NAV_LEFT), TD(NAV_DOWN), TD(NAV_RGHT), XXXXXXX
-#define _________________LOWER_R3__________________ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+#define _________________LOWER_R3__________________ XXXXXXX, OSM_CTL,      OSM_SFT,      OSM_ALT,      OSM_GUI
 #define _____LOWER_THUMB_R_____ _______, _______, _______
 
 #define _________________RAISE_L1__________________ XXXXXXX, KC_7, KC_8, KC_9, XXXXXXX
