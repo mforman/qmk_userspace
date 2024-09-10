@@ -32,8 +32,6 @@ enum tap_dances {
     NAV_RGHT,
     NAV_BSPC,
     NAV_DEL,
-    MT_LPRN,
-    MT_RPRN,
     MT_EQL };
 // clang-format on
 
@@ -57,16 +55,19 @@ enum tap_dances {
 #define MT_S LSFT_T(KC_S)
 #define MT_T LCTL_T(KC_T)
 
+#define MT_F11 GUI_T(KC_F11)
+#define MT_F4 ALT_T(KC_F4)
+#define MT_F5 SFT_T(KC_F5)
+#define MT_F6 CTL_T(KC_F6)
+
 // Right-hand home row mods
 #define MT_N RCTL_T(KC_N)
 #define MT_E RSFT_T(KC_E)
 #define MT_I LALT_T(KC_I)
 #define MT_O RGUI_T(KC_O)
 
-#define MT_F11 GUI_T(KC_F11)
-#define MT_F4 ALT_T(KC_F4)
-#define MT_F5 SFT_T(KC_F5)
-#define MT_F6 CTL_T(KC_F6)
+#define MT_LBRC RCTL_T(KC_LBRC)
+#define MT_RBRC LALT_T(KC_RBRC)
 
 #define CMD_GRV LCMD(KC_GRV)
 #define BSP_WRD LCTL(KC_BSPC)
@@ -103,9 +104,9 @@ enum tap_dances {
 #define _________________RAISE_L3__________________ KC_PIPE, KC_1, KC_2, KC_3, KC_DOT
 #define _____RAISE_THUMB_L_____ XXXXXXX, KC_0, _______
 
-#define _________________RAISE_R1__________________ XXXXXXX, KC_LBRC, KC_PIPE, KC_RBRC, KC_GRV
-#define _________________RAISE_R2__________________ XXXXXXX, TD(MT_LPRN), TD(MT_EQL), TD(MT_RPRN), KC_RGUI
-#define _________________RAISE_R3__________________ XXXXXXX, KC_LCBR, KC_TILD, KC_RCBR, KC_BSLS
+#define _________________RAISE_R1__________________ XXXXXXX, KC_LPRN, KC_PIPE,    KC_RPRN, KC_GRV
+#define _________________RAISE_R2__________________ XXXXXXX, MT_LBRC, TD(MT_EQL), MT_RBRC, KC_RGUI
+#define _________________RAISE_R3__________________ XXXXXXX, KC_LCBR, KC_TILD,    KC_RCBR, KC_BSLS
 #define _____RAISE_THUMB_R_____ _______, _______, _______
 
 #define ________________ADJUST_L1__________________ RGB_MOD, RGB_IDL, KC_RGB_T, RGB_RMOD, XXXXXXX

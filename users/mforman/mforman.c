@@ -43,8 +43,6 @@ tap_dance_action_t tap_dance_actions[] = {
     [NAV_RGHT] = ACTION_TAP_DANCE_TAP_HOLD(KC_RGHT, KC_END),
     [NAV_BSPC] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, C(KC_BSPC)),
     [NAV_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_DEL, C(KC_DEL)),
-    [MT_LPRN] = ACTION_TAP_DANCE_TAP_HOLD(KC_LPRN, KC_RCTL),
-    [MT_RPRN] = ACTION_TAP_DANCE_TAP_HOLD(KC_RPRN, KC_LALT),
     [MT_EQL] = ACTION_TAP_DANCE_TAP_HOLD(KC_EQL, KC_RSFT),
 };
 // clang-format on
@@ -81,8 +79,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TD(NAV_RGHT):
         case TD(NAV_BSPC):
         case TD(NAV_DEL):
-        case TD(MT_LPRN):
-        case TD(MT_RPRN):
         case TD(MT_EQL):
             action = &tap_dance_actions[QK_TAP_DANCE_GET_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
