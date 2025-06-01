@@ -31,8 +31,7 @@ enum tap_dances {
     NAV_LEFT,
     NAV_RGHT,
     NAV_BSPC,
-    NAV_DEL,
-    MT_EQL };
+    NAV_DEL};
 // clang-format on
 
 // Thumb cluster keys
@@ -67,10 +66,11 @@ enum tap_dances {
 #define MT_O RGUI_T(KC_O)
 
 #define MT_LBRC RCTL_T(KC_LBRC)
+#define MT_EQL  RSFT_T(KC_EQL)
 #define MT_RBRC LALT_T(KC_RBRC)
 
 #define CMD_GRV LCMD(KC_GRV)
-#define BSP_WRD LCTL(KC_BSPC)
+#define BSP_WRD LALT(KC_BSPC)
 
 #define OSM_GUI OSM(MOD_LGUI)
 #define OSM_CTL OSM(MOD_LCTL)
@@ -104,9 +104,9 @@ enum tap_dances {
 #define _________________RAISE_L3__________________ KC_PIPE, KC_1, KC_2, KC_3, KC_DOT
 #define _____RAISE_THUMB_L_____ XXXXXXX, KC_0, _______
 
-#define _________________RAISE_R1__________________ XXXXXXX, KC_LPRN, KC_PIPE,    KC_RPRN, KC_GRV
-#define _________________RAISE_R2__________________ XXXXXXX, MT_LBRC, TD(MT_EQL), MT_RBRC, KC_RGUI
-#define _________________RAISE_R3__________________ XXXXXXX, KC_LCBR, KC_TILD,    KC_RCBR, KC_BSLS
+#define _________________RAISE_R1__________________ XXXXXXX, KC_LPRN, KC_PIPE, KC_RPRN, KC_GRV
+#define _________________RAISE_R2__________________ XXXXXXX, MT_LBRC, MT_EQL,  MT_RBRC, KC_RGUI
+#define _________________RAISE_R3__________________ XXXXXXX, KC_LCBR, KC_TILD, KC_RCBR, KC_BSLS
 #define _____RAISE_THUMB_R_____ _______, _______, _______
 
 #define ________________ADJUST_L1__________________ RGB_MOD, RGB_IDL, KC_RGB_T, RGB_RMOD, XXXXXXX

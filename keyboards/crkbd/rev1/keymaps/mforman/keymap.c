@@ -7,11 +7,19 @@ extern keymap_config_t keymap_config;
 // clang-format off
 #define LAYOUT_crkbd_wrapper(...)   LAYOUT_split_3x6_3(__VA_ARGS__)
 
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
+    LAYOUT(
+        'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R',
+        'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R',
+        'L', 'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R', 'R',
+                       '*', '*', '*',  '*', '*', '*'
+    );
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_COLEMAK] = LAYOUT_crkbd_wrapper(
-    TG(_MOUSE), _________________COLEMAK_L1________________,     _________________COLEMAK_R1________________, _______,
-    CW_TOGG,    _________________COLEMAK_L2________________,     _________________COLEMAK_R2________________, _______,
-    KC_F13,     _________________COLEMAK_L3________________,     _________________COLEMAK_R3________________, _______,
+    _______, _________________COLEMAK_L1________________,     _________________COLEMAK_R1________________, _______,
+    CW_TOGG, _________________COLEMAK_L2________________,     _________________COLEMAK_R2________________, _______,
+    KC_F13,  _________________COLEMAK_L3________________,     _________________COLEMAK_R3________________, _______,
                                 ______BASE_THUMB_L______,     ______BASE_THUMB_R______
 ),
   [_LOWER] = LAYOUT_crkbd_wrapper(
@@ -31,12 +39,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, ________________ADJUST_L2__________________,      ________________ADJUST_R2__________________, _______,
     _______, ________________ADJUST_L3__________________,      ________________ADJUST_R3__________________, _______,
                                _______, _______, _______,      _______, _______, _______
-),
-  [_MOUSE] = LAYOUT_crkbd_wrapper(
-    _______, _________________MOUSE_L1__________________,      _________________MOUSE_R1__________________, _______,
-    _______, _________________MOUSE_L2__________________,      _________________MOUSE_R2__________________, _______,
-    _______, _________________MOUSE_L3__________________,      _________________MOUSE_R3__________________, _______,
-                                 _____MOUSE_THUMB_L_____,      _____MOUSE_THUMB_R_____
 )
 };
 // clang-format on

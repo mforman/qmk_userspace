@@ -1,8 +1,51 @@
 #include "mforman.h"
 #include <stdint.h>
-#include "features/achordion.h"
 
 userspace_config_t userspace_config;
+
+#ifdef COMBO_ENABLE
+// COLEMAK
+const uint16_t PROGMEM wfEsc[]      = {KC_W, KC_F, COMBO_END};
+const uint16_t PROGMEM wpMouse[]    = {KC_W, KC_P, COMBO_END};
+const uint16_t PROGMEM rsBspc[]     = {MT_R, MT_S, COMBO_END};
+const uint16_t PROGMEM arsBspc[]    = {MT_A, MT_R, MT_S, COMBO_END};
+const uint16_t PROGMEM stTab[]      = {MT_S, MT_T, COMBO_END};
+const uint16_t PROGMEM luBckSlsh[]  = {KC_L, KC_U, COMBO_END};
+const uint16_t PROGMEM neDash[]     = {MT_N, MT_E, COMBO_END};
+const uint16_t PROGMEM eiColon[]    = {MT_E, MT_I, COMBO_END};
+const uint16_t PROGMEM hCommUnd[]   = {KC_H, KC_COMMA, COMBO_END};
+const uint16_t PROGMEM commDotScl[] = {KC_DOT, KC_COMMA, COMBO_END};
+const uint16_t PROGMEM xcCopy[]     = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM xdCut[]      = {KC_X, KC_D, COMBO_END};
+const uint16_t PROGMEM cdPaste[]    = {KC_C, KC_D, COMBO_END};
+
+// Others
+const uint16_t PROGMEM volDwnUp[]    = {KC_VOLD, KC_VOLU, COMBO_END};
+const uint16_t PROGMEM spcTabCmdCt[] = {TC_SPC, TC_TAB, COMBO_END};
+const uint16_t PROGMEM grvSft[]      = {KC_GRV, KC_RCTL, COMBO_END};
+
+// clang-format off
+combo_t key_combos[] = {
+    COMBO(wfEsc, KC_ESC),
+    COMBO(wpMouse, TG(_MOUSE)),
+    COMBO(rsBspc, KC_BSPC),
+    COMBO(arsBspc, BSP_WRD),
+    COMBO(stTab, KC_TAB),
+    COMBO(luBckSlsh, KC_BSLS),
+    COMBO(neDash, KC_MINS),
+    COMBO(eiColon, KC_COLN),
+    COMBO(hCommUnd, KC_UNDS),
+    COMBO(commDotScl, KC_SCLN),
+    COMBO(xcCopy, LCTL(KC_C)),
+    COMBO(xdCut, LCTL(KC_X)),
+    COMBO(cdPaste, LCTL(KC_V)),
+
+    COMBO(volDwnUp, KC_MUTE),
+    COMBO(spcTabCmdCt, LCTL(KC_LGUI)),
+    COMBO(grvSft, CMD_GRV)
+};
+// clang-format on
+#endif
 
 #ifdef TAP_DANCE_ENABLE
 // clang-format off
@@ -42,8 +85,7 @@ tap_dance_action_t tap_dance_actions[] = {
     [NAV_LEFT] = ACTION_TAP_DANCE_TAP_HOLD(KC_LEFT, KC_HOME),
     [NAV_RGHT] = ACTION_TAP_DANCE_TAP_HOLD(KC_RGHT, KC_END),
     [NAV_BSPC] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, C(KC_BSPC)),
-    [NAV_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_DEL, C(KC_DEL)),
-    [MT_EQL] = ACTION_TAP_DANCE_TAP_HOLD(KC_EQL, KC_RSFT),
+    [NAV_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_DEL, C(KC_DEL))
 };
 // clang-format on
 #endif
@@ -56,10 +98,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef OLED_DRIVER_ENABLE
     process_record_user_oled(keycode, record);
 #endif
-    if (!process_achordion(keycode, record)) {
-        return false;
-    }
-
     if (!process_record_keymap(keycode, record)) {
         return false;
     }
@@ -79,7 +117,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TD(NAV_RGHT):
         case TD(NAV_BSPC):
         case TD(NAV_DEL):
-        case TD(MT_EQL):
             action = &tap_dance_actions[QK_TAP_DANCE_GET_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
                 tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
@@ -89,27 +126,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
     }
     return true;
-}
-
-bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, uint16_t other_keycode, keyrecord_t *other_record) {
-    switch (other_keycode) {
-        case TC_SPC:
-        case TC_TAB:
-        case TC_ENT:
-            return true; // Homerow mods + thumb key
-    }
-    return achordion_opposite_hands(tap_hold_record, other_record);
-}
-
-uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
-    switch (tap_hold_keycode) {
-        case TC_SPC:
-        case TC_TAB:
-        case TC_ENT:
-            return 0; // Bypass Achordion for thumb keys
-    }
-
-    return 800; // Otherwise use a timeout of 800 ms.
 }
 
 __attribute__((weak)) void suspend_power_down_keymap(void) {}
@@ -139,7 +155,6 @@ void suspend_wakeup_init_user(void) {
 __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 void matrix_scan_user(void) {
-    achordion_task();
     matrix_scan_keymap();
 }
 
