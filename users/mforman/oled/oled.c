@@ -310,6 +310,7 @@ void render_status_main(void) {
 
 void render_status_secondary(void) {
     render_logo();
+    // render_bongocat();
 }
 
 bool oled_task_user(void) {

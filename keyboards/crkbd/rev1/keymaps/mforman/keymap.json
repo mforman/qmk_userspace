@@ -1,6 +1,7 @@
 {
-  "modules": [
-    "getreuer/lumino",
-    "getreuer/palettefx",
-  ]
+    "modules": [
+        "drashna/bongocats",
+        "getreuer/lumino",
+        "getreuer/palettefx"
+    ]
 }

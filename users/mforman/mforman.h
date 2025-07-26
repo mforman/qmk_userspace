@@ -8,9 +8,9 @@
 #ifdef SWITCHER_ENABLE
 #    include "switcher/switcher.h"
 #endif
-#ifdef OLED_DRIVER_ENABLE
-#    include "oled/oled.h"
-#endif
+// #ifdef OLED_DRIVER_ENABLE
+// #    include "oled/oled.h"
+// #endif
 
 // clang-format off
 enum keyboard_layers {
