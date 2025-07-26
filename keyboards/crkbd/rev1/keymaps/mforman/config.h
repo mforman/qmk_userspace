@@ -33,6 +33,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define LAYER_STATE_8BIT
 
+#define PALETTEFX_ENABLE_ALL_EFFECTS
+#define PALETTEFX_ENABLE_ALL_PALETTES
+
 // #define TAPPING_FORCE_HOLD
 #ifdef RGBLIGHT_ENABLE
 #    undef RGBLED_NUM
@@ -91,7 +94,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    undef ENABLE_RGB_MATRIX_RAINBOW_PINWHEELS
 #    undef ENABLE_RGB_MATRIX_RAINDROPS
 #    undef ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS
-#    define ENABLE_RGB_MATRIX_TYPING_HEATMAP
+#    undef ENABLE_RGB_MATRIX_TYPING_HEATMAP
 #    undef ENABLE_RGB_MATRIX_DIGITAL_RAIN
 #    undef ENABLE_RGB_MATRIX_SOLID_REACTIVE
 #    undef ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE

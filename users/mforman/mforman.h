@@ -109,9 +109,9 @@ enum tap_dances {
 #define _________________RAISE_R3__________________ XXXXXXX, KC_LCBR, KC_TILD, KC_RCBR, KC_BSLS
 #define _____RAISE_THUMB_R_____ _______, _______, _______
 
-#define ________________ADJUST_L1__________________ RGB_MOD, RGB_IDL, KC_RGB_T, RGB_RMOD, XXXXXXX
-#define ________________ADJUST_L2__________________ RGB_TOG, RGB_HUI, RGB_SAI,  RGB_VAI,  RGB_SPI
-#define ________________ADJUST_L3__________________ RGBRST,  RGB_HUD, RGB_SAD,  RGB_VAD,  RGB_SPD
+#define ________________ADJUST_L1__________________ LUMINO,  RM_TOGG, KC_RGB_T, XXXXXXX, XXXXXXX
+#define ________________ADJUST_L2__________________ RM_NEXT, RM_HUEU, RM_SATU,  RM_VALU, RM_SPDU
+#define ________________ADJUST_L3__________________ RM_NEXT, RM_HUED, RM_SATD,  RM_VALD, RM_SPDD
 
 #define ________________ADJUST_R1__________________ CG_TOGG, KC_MPLY, KC_VOLU, KC_MUTE, QK_BOOT
 #define ________________ADJUST_R2__________________ XXXXXXX, KC_MRWD, KC_VOLD, KC_MFFD, XXXXXXX
