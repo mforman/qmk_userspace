@@ -7,13 +7,13 @@ LTO_ENABLE = no
 #Build Options
 #change to "no" to disable the options, or define them in the Makefile in
 #the appropriate keymap folder that will get included automatically
-#
+
 EXTRAKEY_ENABLE    = yes  # Audio control and System control(+450)
 NKRO_ENABLE        = yes  # Nkey Rollover - if this doesn't work, see here: https://github.com/tmk/tmk_keyboard/wiki/FAQ#nkro-doesnt-work
 # DYNAMIC_MACRO_ENABLE = yes
 SPACE_CADET_ENABLE = no
 GRAVE_ESC_ENABLE   = no
-MOUSEKEY_ENABLE    = yes  # Mouse keys(+4700)
+MOUSEKEY_ENABLE    = no  # Mouse keys(+4700)
 RGBLIGHT_ENABLE    = no   # Enable WS2812 RGB underlight.
 RGB_MATRIX_ENABLE  = yes
 BOOTMAGIC_ENABLE   = yes  # Enable Bootmagic Lite

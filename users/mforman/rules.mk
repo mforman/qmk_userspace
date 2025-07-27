@@ -1,5 +1,5 @@
 BOOTMAGIC_ENABLE = yes  # Enable Bootmagic Lite
-MOUSEKEY_ENABLE  = yes
+MOUSEKEY_ENABLE  = no
 EXTRAKEY_ENABLE  = yes
 TAP_DANCE_ENABLE = yes
 CAPS_WORD_ENABLE = yes

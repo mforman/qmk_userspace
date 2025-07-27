@@ -88,7 +88,7 @@ enum tap_dances {
 
 #define _________________LOWER_R1__________________ KC_PGUP, TD(NAV_BSPC), TD(NAV_UP),   TD(NAV_DEL),  XXXXXXX
 #define _________________LOWER_R2__________________ KC_PGDN, TD(NAV_LEFT), TD(NAV_DOWN), TD(NAV_RGHT), XXXXXXX
-#define _________________LOWER_R3__________________ XXXXXXX, OSM_GUI,      OSM_SFT,      OSM_ALT,      OSM_CTL
+#define _________________LOWER_R3__________________ XXXXXXX, OSM_CTL,      OSM_SFT,      OSM_ALT,      OSM_GUI
 #define _____LOWER_THUMB_R_____ _______, _______, _______
 
 #define _________________RAISE_L1__________________ XXXXXXX, KC_7, KC_8, KC_9, XXXXXXX
@@ -110,14 +110,14 @@ enum tap_dances {
 #define ________________ADJUST_R3__________________ XXXXXXX, DT_UP,   DT_DOWN, DT_PRNT, XXXXXXX
 
 #define _________________MOUSE_L1__________________ _______, _______, _______, _______, _______
-#define _________________MOUSE_L2__________________ _______, OSM_GUI, OSM_ALT, OSM_SFT, OSM_CTL
+#define _________________MOUSE_L2__________________ _______, OSM_CTL, OSM_ALT, OSM_SFT, OSM_GUI
 #define _________________MOUSE_L3__________________ _______, _______, _______, _______, _______
 #define _____MOUSE_THUMB_L_____ XXXXXXX, XXXXXXX, XXXXXXX
 
-#define _________________MOUSE_R1__________________ XXXXXXX, KC_WH_U, KC_MS_U, KC_WH_D, XXXXXXX
-#define _________________MOUSE_R2__________________ XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX
-#define _________________MOUSE_R3__________________ XXXXXXX, KC_BTN4, KC_BTN3, KC_BTN5, XXXXXXX
-#define _____MOUSE_THUMB_R_____ KC_BTN1, KC_BTN2, XXXXXXX
+#define _________________MOUSE_R1__________________ OM_W_U , OM_BTNS, OM_U   , OM_DBLS, _______
+#define _________________MOUSE_R2__________________ OM_W_D , OM_L   , OM_D   , OM_R   , OM_SLOW
+#define _________________MOUSE_R3__________________ OM_RELS, OM_HLDS, OM_SEL1, OM_SEL2, OM_SEL3
+#define _____MOUSE_THUMB_R_____ XXXXXXX, XXXXXXX, XXXXXXX
 
 #define ________________NUMBER_LEFT________________ KC_1, KC_2, KC_3, KC_4, KC_5
 #define ________________NUMBER_RIGHT_______________ KC_6, KC_7, KC_8, KC_9, KC_0
