@@ -1,6 +1,7 @@
 #include "oled.h"
 #include <stdint.h>
 #include "mforman.h"
+#include "palettefx.h"
 
 uint32_t oled_timer = 0;
 
@@ -44,66 +45,93 @@ void render_layer_state(void) {
 }
 
 #ifdef RGB_MATRIX_ENABLE
-const char *rgb_matrix_anim_oled_text(uint8_t mode) {
+const char *palettefx_effect_name(uint8_t mode) {
     switch (mode) {
-        case RGB_MATRIX_SOLID_COLOR:
+        case 1:
             return PSTR("Solid");
+        case 2:
+            return PSTR("Grdnt");
+        case 3:
+            return PSTR("Flow ");
+        case 4:
+            return PSTR("Rippl");
+        case 5:
+            return PSTR("Sprkl");
+        case 6:
+            return PSTR("Vortx");
+        case 7:
+            return PSTR("React");
+        default:
+            return PSTR("Unkwn");
+    }
+}
 
-#    ifdef ENABLE_RGB_MATRIX_ALPHAS_MODS
-        case RGB_MATRIX_ALPHAS_MODS:
-            return PSTR("Mods ");
-#    endif
-
-#    ifdef ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
-        case RGB_MATRIX_GRADIENT_UP_DOWN:
-            return PSTR("Grad ");
-#    endif
-
-#    ifdef ENABLE_RGB_MATRIX_BAND_SAT
-        case RGB_MATRIX_BAND_SAT:
-            return PSTR("Band ");
-#    endif
-
-#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP
-        case RGB_MATRIX_TYPING_HEATMAP:
-            return PSTR("Heat ");
-#    endif
-
-#    ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS
-        case RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS:
-            return PSTR("Nexus");
-#    endif
-
-#    ifdef ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
-        case RGB_MATRIX_SOLID_MULTISPLASH:
-            return PSTR("Matrx");
-#    endif
-
-#    ifdef ENABLE_RGB_MATRIX_DIGITAL_RAIN
-        case RGB_MATRIX_DIGITAL_RAIN:
-            return PSTR("Rain ");
-#    endif
-
-#    ifdef ENABLE_RGB_MATRIX_BREATHING
-        case RGB_MATRIX_BREATHING:
-            return PSTR("Pulse");
-#    endif
-
-#    ifdef ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
-        case RGB_MATRIX_RAINBOW_MOVING_CHEVRON:
-            return PSTR("Chvrn");
-#    endif
-
-#    ifdef ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
-        case RGB_MATRIX_CYCLE_LEFT_RIGHT:
-            return PSTR("Wave ");
-#    endif
-
-#    ifdef ENABLE_RGB_MATRIX_DUAL_BEACON
-        case RGB_MATRIX_DUAL_BEACON:
-            return PSTR("Beacn");
-#    endif
-
+const char *palettefx_palette_name(uint8_t mode) {
+    switch (mode) {
+        case PALETTEFX_AFTERBURN:
+            return PSTR("aftbn");
+        case PALETTEFX_AMBER:
+            return PSTR("amber");
+        case PALETTEFX_BADWOLF:
+            return PSTR("bwolf");
+        case PALETTEFX_CARNIVAL:
+            return PSTR("crnvl");
+        case PALETTEFX_CLASSIC:
+            return PSTR("clssc");
+        case PALETTEFX_DRACULA:
+            return PSTR("dracu");
+        case PALETTEFX_GROOVY:
+            return PSTR("groov");
+        case PALETTEFX_NOTPINK:
+            return PSTR("ntpnk");
+        case PALETTEFX_PHOSPHOR:
+            return PSTR("phspr");
+        case PALETTEFX_POLARIZED:
+            return PSTR("plrzd");
+        case PALETTEFX_ROSEGOLD:
+            return PSTR("rsgld");
+        case PALETTEFX_SPORT:
+            return PSTR("sport");
+        case PALETTEFX_SYNTHWAVE:
+            return PSTR("synth");
+        case PALETTEFX_THERMAL:
+            return PSTR("thrml");
+        case PALETTEFX_VIRIDIS:
+            return PSTR("vrids");
+        case PALETTEFX_WATERMELON:
+            return PSTR("melon");
+        case PALETTEFX_USER_0:
+            return PSTR("usr0 ");
+        case PALETTEFX_USER_1:
+            return PSTR("usr1 ");
+        case PALETTEFX_USER_2:
+            return PSTR("usr2 ");
+        case PALETTEFX_USER_3:
+            return PSTR("usr3 ");
+        case PALETTEFX_USER_4:
+            return PSTR("usr4 ");
+        case PALETTEFX_USER_5:
+            return PSTR("usr5 ");
+        case PALETTEFX_USER_6:
+            return PSTR("usr6 ");
+        case PALETTEFX_USER_7:
+            return PSTR("usr7 ");
+        case PALETTEFX_USER_8:
+            return PSTR("usr8 ");
+        case PALETTEFX_USER_9:
+            return PSTR("usr9 ");
+        case PALETTEFX_USER_10:
+            return PSTR("usr10");
+        case PALETTEFX_USER_11:
+            return PSTR("usr10");
+        case PALETTEFX_USER_12:
+            return PSTR("usr12");
+        case PALETTEFX_USER_13:
+            return PSTR("usr13");
+        case PALETTEFX_USER_14:
+            return PSTR("usr14");
+        case PALETTEFX_USER_15:
+            return PSTR("usr15");
         default:
             return PSTR("Unkwn");
     }
@@ -281,7 +309,8 @@ void render_status_main(void) {
 #ifdef RGB_MATRIX_ENABLE
     if (rgb_matrix_config.enable) {
         render_space();
-        oled_write_P(rgb_matrix_anim_oled_text(rgb_matrix_get_mode()), false);
+        oled_write_P(palettefx_effect_name(rgb_matrix_get_mode()), false);
+        oled_write_P(palettefx_palette_name(rgb_matrix_get_hue() / 8), false);
     } else {
         render_space();
         oled_write_P(PSTR(" Off "), false);
@@ -293,7 +322,6 @@ void render_status_main(void) {
 
 void render_status_secondary(void) {
     render_logo();
-    // render_bongocat();
 }
 
 bool oled_task_user(void) {

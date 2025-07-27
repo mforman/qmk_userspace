@@ -39,6 +39,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PALETTEFX_ENABLE_ALL_PALETTES
 
 #ifdef RGB_MATRIX_ENABLE
+#  define RGB_MATRIX_KEYREACTIVE_ENABLED
+
 // Since we have PaletteFx, disable most built-in RGB Matrix effects.
 #  undef ENABLE_RGB_MATRIX_ALPHAS_MODS
 #  undef ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
