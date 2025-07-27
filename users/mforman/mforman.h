@@ -5,12 +5,9 @@
 #include "eeprom.h"
 #include "version.h"
 
-#ifdef SWITCHER_ENABLE
-#    include "switcher/switcher.h"
+#ifdef OLED_DRIVER_ENABLE
+#    include "oled/oled.h"
 #endif
-// #ifdef OLED_DRIVER_ENABLE
-// #    include "oled/oled.h"
-// #endif
 
 // clang-format off
 enum keyboard_layers {
@@ -19,11 +16,6 @@ enum keyboard_layers {
     _RAISE,
     _ADJUST,
     _MOUSE };
-
-enum mforman_keycodes {
-    RGB_IDL,
-    KC_RGB_T,
-    RGBRST };
 
 enum tap_dances {
     NAV_UP,
@@ -43,29 +35,29 @@ enum tap_dances {
 #define TC_ENT LT(_RAISE, KC_ENTER)
 
 // Home row modifiers.
-// GASC/ ◆⎇ ⇧⎈
-// CG_TOGG will switch it to the CASG in MacOS
+// CASG/ ⎈ ⎇ ⇧◆
+// CG_TOGG will switch it to the GASC in Windows
 // Leave shift on the thumb on the alpha layer
-// https://precondition.github.io/home-row-mods#gasc
+// https://precondition.github.io/home-row-mods
 
 // Left-hand home row mods
-#define MT_A LGUI_T(KC_A)
+#define MT_A LCTL_T(KC_A)
 #define MT_R LALT_T(KC_R)
 #define MT_S LSFT_T(KC_S)
-#define MT_T LCTL_T(KC_T)
+#define MT_T LGUI_T(KC_T)
 
-#define MT_F11 GUI_T(KC_F11)
-#define MT_F4 ALT_T(KC_F4)
-#define MT_F5 SFT_T(KC_F5)
-#define MT_F6 CTL_T(KC_F6)
+#define MT_F11 CTL_T(KC_F11)
+#define MT_F4  ALT_T(KC_F4)
+#define MT_F5  SFT_T(KC_F5)
+#define MT_F6  GUI_T(KC_F6)
 
 // Right-hand home row mods
-#define MT_N RCTL_T(KC_N)
+#define MT_N RGUI_T(KC_N)
 #define MT_E RSFT_T(KC_E)
 #define MT_I LALT_T(KC_I)
-#define MT_O RGUI_T(KC_O)
+#define MT_O RCTL_T(KC_O)
 
-#define MT_LBRC RCTL_T(KC_LBRC)
+#define MT_LBRC RGUI_T(KC_LBRC)
 #define MT_EQL  RSFT_T(KC_EQL)
 #define MT_RBRC LALT_T(KC_RBRC)
 
@@ -96,7 +88,7 @@ enum tap_dances {
 
 #define _________________LOWER_R1__________________ KC_PGUP, TD(NAV_BSPC), TD(NAV_UP),   TD(NAV_DEL),  XXXXXXX
 #define _________________LOWER_R2__________________ KC_PGDN, TD(NAV_LEFT), TD(NAV_DOWN), TD(NAV_RGHT), XXXXXXX
-#define _________________LOWER_R3__________________ XXXXXXX, OSM_CTL,      OSM_SFT,      OSM_ALT,      OSM_GUI
+#define _________________LOWER_R3__________________ XXXXXXX, OSM_GUI,      OSM_SFT,      OSM_ALT,      OSM_CTL
 #define _____LOWER_THUMB_R_____ _______, _______, _______
 
 #define _________________RAISE_L1__________________ XXXXXXX, KC_7, KC_8, KC_9, XXXXXXX
@@ -105,20 +97,20 @@ enum tap_dances {
 #define _____RAISE_THUMB_L_____ XXXXXXX, KC_0, _______
 
 #define _________________RAISE_R1__________________ XXXXXXX, KC_LPRN, KC_PIPE, KC_RPRN, KC_GRV
-#define _________________RAISE_R2__________________ XXXXXXX, MT_LBRC, MT_EQL,  MT_RBRC, KC_RGUI
+#define _________________RAISE_R2__________________ XXXXXXX, MT_LBRC, MT_EQL,  MT_RBRC, KC_RCTL
 #define _________________RAISE_R3__________________ XXXXXXX, KC_LCBR, KC_TILD, KC_RCBR, KC_BSLS
 #define _____RAISE_THUMB_R_____ _______, _______, _______
 
-#define ________________ADJUST_L1__________________ LUMINO,  RM_TOGG, KC_RGB_T, XXXXXXX, XXXXXXX
-#define ________________ADJUST_L2__________________ RM_NEXT, RM_HUEU, RM_SATU,  RM_VALU, RM_SPDU
-#define ________________ADJUST_L3__________________ RM_NEXT, RM_HUED, RM_SATD,  RM_VALD, RM_SPDD
+#define ________________ADJUST_L1__________________ LUMINO,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+#define ________________ADJUST_L2__________________ RM_NEXT, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU
+#define ________________ADJUST_L3__________________ RM_NEXT, RM_HUED, RM_SATD, RM_VALD, RM_SPDD
 
 #define ________________ADJUST_R1__________________ CG_TOGG, KC_MPLY, KC_VOLU, KC_MUTE, QK_BOOT
 #define ________________ADJUST_R2__________________ XXXXXXX, KC_MRWD, KC_VOLD, KC_MFFD, XXXXXXX
 #define ________________ADJUST_R3__________________ XXXXXXX, DT_UP,   DT_DOWN, DT_PRNT, XXXXXXX
 
 #define _________________MOUSE_L1__________________ _______, _______, _______, _______, _______
-#define _________________MOUSE_L2__________________ OSM_GUI, OSM_ALT, OSM_SFT, OSM_CTL, _______
+#define _________________MOUSE_L2__________________ _______, OSM_GUI, OSM_ALT, OSM_SFT, OSM_CTL
 #define _________________MOUSE_L3__________________ _______, _______, _______, _______, _______
 #define _____MOUSE_THUMB_L_____ XXXXXXX, XXXXXXX, XXXXXXX
 
@@ -131,7 +123,6 @@ enum tap_dances {
 #define ________________NUMBER_RIGHT_______________ KC_6, KC_7, KC_8, KC_9, KC_0
 #define ___________________BLANK___________________ _______, _______, _______, _______, _______
 
-layer_state_t layer_state_set_keymap(layer_state_t state);
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
 void matrix_scan_keymap(void);
 void suspend_power_down_keymap(void);
@@ -146,19 +137,5 @@ typedef struct {
 void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data);
 void tap_dance_tap_hold_reset(tap_dance_state_t *state, void *user_data);
 
-typedef union {
-    uint32_t raw;
-    struct {
-        bool     rgb_layer_change        : 1;
-        bool     rgb_matrix_idle_anim    : 1;
-        uint8_t  rgb_matrix_active_mode  : 4;
-        uint8_t  rgb_matrix_idle_mode    : 4;
-        uint8_t  rgb_matrix_active_speed : 8;
-        uint8_t  rgb_matrix_idle_speed   : 8;
-        uint16_t rgb_matrix_idle_timeout : 16;
-
-    };
-} userspace_config_t;
 // clang-format on
 
-extern userspace_config_t userspace_config;

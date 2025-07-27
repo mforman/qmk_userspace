@@ -271,15 +271,6 @@ void render_keylock_status(led_t led_usb_state) {
     }
 }
 
-#ifdef WPM_ENABLE
-void render_wpm(uint8_t wpm) {
-    char wpm_str[6];                                  // Buffer to hold the formatted string, including the null terminator.
-    snprintf(wpm_str, sizeof(wpm_str), " %3d ", wpm); // Format the WPM with padding.
-    oled_write_P(PSTR(" WPM "), false);
-    oled_write(wpm_str, false); // Write the formatted string to the OLED.
-}
-#endif
-
 void render_status_main(void) {
     render_layer_state();
     render_space();
@@ -290,12 +281,7 @@ void render_status_main(void) {
 #ifdef RGB_MATRIX_ENABLE
     if (rgb_matrix_config.enable) {
         render_space();
-        if (userspace_config.rgb_matrix_idle_anim) {
-            oled_write_P(rgb_matrix_anim_oled_text(userspace_config.rgb_matrix_active_mode), false);
-            oled_write_P(rgb_matrix_anim_oled_text(userspace_config.rgb_matrix_idle_mode), false);
-        } else {
-            oled_write_P(rgb_matrix_anim_oled_text(rgb_matrix_get_mode()), false);
-        }
+        oled_write_P(rgb_matrix_anim_oled_text(rgb_matrix_get_mode()), false);
     } else {
         render_space();
         oled_write_P(PSTR(" Off "), false);
@@ -303,9 +289,6 @@ void render_status_main(void) {
 #endif
     render_keylock_status(host_keyboard_led_state());
     render_space();
-#ifdef WPM_ENABLE
-    render_wpm(get_current_wpm());
-#endif
 }
 
 void render_status_secondary(void) {
