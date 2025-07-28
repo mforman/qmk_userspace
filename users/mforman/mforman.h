@@ -27,8 +27,8 @@ enum tap_dances {
 // clang-format on
 
 // Thumb cluster keys
-#define TC_GUI OSM(MOD_LGUI)
-#define TC_SPC LCTL_T(KC_SPACE)
+#define TC_CTL OSM(MOD_LCTL)
+#define TC_SPC LGUI_T(KC_SPACE)
 #define TC_TAB LT(_LOWER, KC_TAB)
 #define TC_OPT OSM(MOD_LALT)
 #define TC_BSP LSFT_T(KC_BSPC)
@@ -70,7 +70,7 @@ enum tap_dances {
 #define OSM_ALT OSM(MOD_LALT)
 
 // clang-format off
-#define ______BASE_THUMB_L______ TC_GUI, TC_SPC, TC_TAB
+#define ______BASE_THUMB_L______ TC_CTL, TC_SPC, TC_TAB
 #define ______BASE_THUMB_R______ TC_ENT, OSM_SFT, TC_OPT
 
 #define _________________COLEMAK_L1________________ KC_Q, KC_W, KC_F, KC_P, KC_B
