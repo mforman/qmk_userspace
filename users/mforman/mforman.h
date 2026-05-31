@@ -33,6 +33,7 @@ enum tap_dances {
 #define TC_OPT OSM(MOD_LALT)
 #define TC_BSP LSFT_T(KC_BSPC)
 #define TC_ENT LT(_RAISE, KC_ENTER)
+#define MAGIC_SHIFT LSFT_T(KC_F24)
 
 // Home row modifiers.
 // CASG/ ⎈ ⎇ ⇧◆
@@ -71,7 +72,7 @@ enum tap_dances {
 
 // clang-format off
 #define ______BASE_THUMB_L______ TC_CTL, TC_SPC, TC_TAB
-#define ______BASE_THUMB_R______ TC_ENT, OSM_SFT, TC_OPT
+#define ______BASE_THUMB_R______ TC_ENT, MAGIC_SHIFT, TC_OPT
 
 #define _________________COLEMAK_L1________________ KC_Q, KC_W, KC_F, KC_P, KC_B
 #define _________________COLEMAK_L2________________ MT_A, MT_R, MT_S, MT_T, KC_G

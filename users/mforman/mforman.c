@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include "g/keymap_combo.h"
 
+static uint16_t last_alpha_time = 0;
+
 #ifdef TAP_DANCE_ENABLE
 // clang-format off
 void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data) {
@@ -70,9 +72,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 #endif
 
+    // Track last alpha for magic-shift repeat logic.
+    if (record->event.pressed) {
+        uint16_t tap_kc = get_tap_keycode(keycode);
+        if (tap_kc >= KC_A && tap_kc <= KC_Z) {
+            last_alpha_time = record->event.time;
+        }
+    }
+
     tap_dance_action_t *action;
 
     switch (keycode) {
+        case MAGIC_SHIFT:
+            if (record->tap.count && record->event.pressed) {
+                if (get_mods() & MOD_MASK_SHIFT) {
+                    caps_word_on();
+                } else if (last_alpha_time && timer_elapsed(last_alpha_time) < 1200) {
+                    tap_code16(QK_REP);
+                } else {
+                    add_oneshot_mods(MOD_BIT(KC_LSFT));
+                }
+                return false;
+            }
+            return true;
+
         case TD(NAV_UP):
         case TD(NAV_DOWN):
         case TD(NAV_LEFT):
