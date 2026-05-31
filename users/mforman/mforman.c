@@ -2,7 +2,8 @@
 #include <stdint.h>
 #include "g/keymap_combo.h"
 
-static uint16_t last_alpha_time = 0;
+static bool     last_alpha_valid = false;
+static uint16_t last_alpha_time  = 0;
 
 #ifdef TAP_DANCE_ENABLE
 // clang-format off
@@ -76,7 +77,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         uint16_t tap_kc = get_tap_keycode(keycode);
         if (tap_kc >= KC_A && tap_kc <= KC_Z) {
-            last_alpha_time = record->event.time;
+            last_alpha_time  = record->event.time;
+            last_alpha_valid = true;
         }
     }
 
@@ -87,10 +89,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 if (get_mods() & MOD_MASK_SHIFT) {
                     caps_word_on();
-                } else if (last_alpha_time && timer_elapsed(last_alpha_time) < 1200) {
+                } else if (last_alpha_valid && timer_elapsed(last_alpha_time) < 1200) {
                     tap_code16(QK_REP);
                 } else {
-                    add_oneshot_mods(MOD_BIT(KC_LSFT));
+                    set_oneshot_mods(MOD_BIT(KC_LSFT));
                 }
                 return false;
             }
