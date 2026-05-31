@@ -13,7 +13,14 @@ void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data) {
             && !state->interrupted
 #endif
         ) {
-            register_code16(tap_hold->hold);
+            if (tap_hold->hold == KC_HOME || tap_hold->hold == KC_END) {
+                uint8_t saved_mods = get_mods() & MOD_MASK_CTRL;
+                del_mods(MOD_MASK_CTRL);
+                register_code16(tap_hold->hold);
+                add_mods(saved_mods);
+            } else {
+                register_code16(tap_hold->hold);
+            }
             tap_hold->held = tap_hold->hold;
         } else {
             register_code16(tap_hold->tap);
