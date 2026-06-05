@@ -90,7 +90,7 @@ In addition to all the layers, pressing two (or three) keys at the same time, tr
 1. Add your keymap(s) to the build by running `qmk userspace-add -kb <your_keyboard> -km <your_keymap>`
     - This will automatically update your `qmk.json` file
     - Corresponding `qmk userspace-remove -kb <your_keyboard> -km <your_keymap>` will delete it
-    - Listing the build targets can be done with with `qmk userspace-list`
+    - Listing the build targets can be done with `qmk userspace-list`
 1. Commit your changes
 
 ## Howto build with GitHub
