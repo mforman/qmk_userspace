@@ -75,7 +75,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
 
     // Track last alpha for magic-shift repeat logic.
-    if (record->event.pressed) {
+    // Exclude MAGIC_SHIFT itself so its initial press (tap.count=0, tap_kc=KC_F24)
+    // doesn't clobber the context before the tap fires.
+    if (record->event.pressed && keycode != MAGIC_SHIFT) {
         uint16_t tap_kc = get_tap_keycode(keycode);
         if (tap_kc >= KC_A && tap_kc <= KC_Z) {
             last_alpha_keycode = tap_kc;
