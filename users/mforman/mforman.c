@@ -81,6 +81,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             last_alpha_keycode = tap_kc;
             last_alpha_time    = record->event.time;
             last_alpha_valid   = true;
+        } else if (tap_kc > KC_TRANSPARENT && tap_kc < 0x100) {
+            last_alpha_valid = false;
         }
     }
 
