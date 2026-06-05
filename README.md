@@ -67,7 +67,6 @@ The right hand of the `ADJUST` layer controls RGB light effects
 In addition to all the layers, pressing two (or three) keys at the same time, triggers a different key. For me, these are the most powerful feature of the keyboard.
 
 -   `W`+`F` = `Esc`
--   `W`+`P` = Toggle mouse layer
 -   `R`+`S` = `Backspace`
 -   `A`+`R`+`S` = Delete the previous word
 -   `S`+`T` = `Tab`
@@ -103,6 +102,31 @@ In addition to all the layers, pressing two (or three) keys at the same time, tr
 1. Inspect the Releases tab on your repository for the latest firmware build
 
 ## Howto build locally
+
+### With Docker (no local QMK install required)
+
+Requires a local clone of `qmk_firmware` alongside this repo and Docker running.
+
+```sh
+docker run --rm \
+  -w /qmk_firmware \
+  -v /path/to/qmk_firmware:/qmk_firmware:z \
+  -v /path/to/qmk_userspace:/qmk_userspace:z \
+  -e QMK_USERSPACE=/qmk_userspace \
+  ghcr.io/qmk/qmk_cli \
+  bash -c "git config --global --add safe.directory /qmk_firmware && \
+           make -r -R -C /qmk_firmware -f builddefs/build_keyboard.mk all \
+           KEYBOARD=crkbd/rev1 KEYMAP=mforman QMK_BIN=qmk"
+```
+
+Output lands in `qmk_firmware/.build/crkbd_rev1_mforman.uf2` and is copied to the userspace root.
+
+Notes:
+- `git config --global --add safe.directory /qmk_firmware` is required because the mounted volume appears under a different owner inside the container
+- `docker_build.sh` in qmk_firmware also works but requires an interactive TTY (`-it`); use the command above for scripting
+- `qmk.json` must use strict JSON (no trailing commas) or the `qmk_cli` wrapper silently drops the userspace, causing module lookup failures
+
+### With qmk installed
 
 1. Run the normal `qmk setup` procedure if you haven't already done so -- see [QMK Docs](https://docs.qmk.fm/#/newbs) for details.
 1. Fork this repository
