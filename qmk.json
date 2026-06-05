@@ -1,6 +1,6 @@
 {
     "userspace_version": "1.0",
     "build_targets": [
-        ["crkbd/rev1", "mforman"],
+        ["crkbd/rev1", "mforman"]
     ]
 }

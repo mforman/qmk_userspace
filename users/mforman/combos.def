@@ -1,6 +1,5 @@
 //   name       result      chord keys
 COMB(WF_ESC,    KC_ESC,     KC_W, KC_F)
-COMB(WP_MOUSE,  TG(_MOUSE), KC_W, KC_P)
 COMB(RS_BSPC,   KC_BSPC,    MT_R, MT_S)
 COMB(ARS_BSPC,  BSP_WRD,    MT_A, MT_R, MT_S)
 COMB(ST_TAB,    KC_TAB,     MT_S, MT_T)

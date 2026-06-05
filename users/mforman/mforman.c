@@ -82,8 +82,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
     }
 
-    tap_dance_action_t *action;
-
     switch (keycode) {
         case MAGIC_SHIFT:
             if (record->tap.count && record->event.pressed) {
@@ -103,12 +101,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TD(NAV_LEFT):
         case TD(NAV_RGHT):
         case TD(NAV_BSPC):
-        case TD(NAV_DEL):
-            action = &tap_dance_actions[QK_TAP_DANCE_GET_INDEX(keycode)];
-            if (!record->event.pressed && action->state.count && !action->state.finished) {
-                tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
+        case TD(NAV_DEL): {
+            uint8_t           td_idx   = QK_TAP_DANCE_GET_INDEX(keycode);
+            tap_dance_state_t *td_state = tap_dance_get_state(td_idx);
+            if (!record->event.pressed && td_state->count && !td_state->finished) {
+                tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)tap_dance_actions[td_idx].user_data;
                 tap_code16(tap_hold->tap);
             }
+            return true;
+        }
         default:
             return true;
     }

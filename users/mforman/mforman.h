@@ -14,8 +14,7 @@ enum keyboard_layers {
     _COLEMAK = 0,
     _LOWER,
     _RAISE,
-    _ADJUST,
-    _MOUSE };
+    _ADJUST };
 
 enum tap_dances {
     NAV_UP,
@@ -110,15 +109,6 @@ enum tap_dances {
 #define ________________ADJUST_R2__________________ XXXXXXX, KC_MRWD, KC_VOLD, KC_MFFD, XXXXXXX
 #define ________________ADJUST_R3__________________ XXXXXXX, DT_UP,   DT_DOWN, DT_PRNT, XXXXXXX
 
-#define _________________MOUSE_L1__________________ _______, _______, _______, _______, _______
-#define _________________MOUSE_L2__________________ _______, OSM_CTL, OSM_ALT, OSM_SFT, OSM_GUI
-#define _________________MOUSE_L3__________________ _______, _______, _______, _______, _______
-#define _____MOUSE_THUMB_L_____ XXXXXXX, XXXXXXX, XXXXXXX
-
-#define _________________MOUSE_R1__________________ OM_W_U , OM_BTNS, OM_U   , OM_DBLS, _______
-#define _________________MOUSE_R2__________________ OM_W_D , OM_L   , OM_D   , OM_R   , OM_SLOW
-#define _________________MOUSE_R3__________________ OM_RELS, OM_HLDS, OM_SEL1, OM_SEL2, OM_SEL3
-#define _____MOUSE_THUMB_R_____ XXXXXXX, XXXXXXX, XXXXXXX
 
 #define ________________NUMBER_LEFT________________ KC_1, KC_2, KC_3, KC_4, KC_5
 #define ________________NUMBER_RIGHT_______________ KC_6, KC_7, KC_8, KC_9, KC_0
