@@ -295,6 +295,10 @@ void render_keylock_status(led_t led_usb_state) {
     }
 }
 
+void render_os_status(void) {
+    oled_write_P(keymap_config.swap_lctl_lgui ? PSTR(" WIN ") : PSTR(" MAC "), false);
+}
+
 void render_status_main(void) {
     render_layer_state();
     render_space();
@@ -313,7 +317,7 @@ void render_status_main(void) {
     }
 #endif
     render_keylock_status(host_keyboard_led_state());
-    render_space();
+    render_os_status();
 }
 
 void render_status_secondary(void) {

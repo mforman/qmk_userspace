@@ -8,6 +8,14 @@ static uint16_t last_alpha_keycode = KC_NO;
 
 #ifdef TAP_DANCE_ENABLE
 // clang-format off
+static uint16_t word_mod_bspc(void) {
+    return keymap_config.swap_lctl_lgui ? C(KC_BSPC) : A(KC_BSPC);
+}
+
+static uint16_t word_mod_del(void) {
+    return keymap_config.swap_lctl_lgui ? C(KC_DEL) : A(KC_DEL);
+}
+
 void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data) {
     tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
 
@@ -17,15 +25,21 @@ void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data) {
             && !state->interrupted
 #endif
         ) {
-            if (tap_hold->hold == KC_HOME || tap_hold->hold == KC_END) {
+            uint16_t kc = tap_hold->hold;
+            if (tap_hold->tap == KC_BSPC && kc == KC_NO) {
+                kc = word_mod_bspc();
+            } else if (tap_hold->tap == KC_DEL && kc == KC_NO) {
+                kc = word_mod_del();
+            } else if (kc == KC_HOME || kc == KC_END) {
                 uint8_t saved_mods = get_mods() & MOD_MASK_CTRL;
                 del_mods(MOD_MASK_CTRL);
-                register_code16(tap_hold->hold);
+                register_code16(kc);
                 add_mods(saved_mods);
-            } else {
-                register_code16(tap_hold->hold);
+                tap_hold->held = kc;
+                return;
             }
-            tap_hold->held = tap_hold->hold;
+            register_code16(kc);
+            tap_hold->held = kc;
         } else {
             register_code16(tap_hold->tap);
             tap_hold->held = tap_hold->tap;
@@ -50,8 +64,8 @@ tap_dance_action_t tap_dance_actions[] = {
     [NAV_DOWN] = ACTION_TAP_DANCE_TAP_HOLD(KC_DOWN, G(KC_END)),
     [NAV_LEFT] = ACTION_TAP_DANCE_TAP_HOLD(KC_LEFT, KC_HOME),
     [NAV_RGHT] = ACTION_TAP_DANCE_TAP_HOLD(KC_RGHT, KC_END),
-    [NAV_BSPC] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, A(KC_BSPC)),
-    [NAV_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_DEL, A(KC_DEL))
+    [NAV_BSPC] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, KC_NO),
+    [NAV_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_DEL, KC_NO)
 };
 // clang-format on
 #endif
@@ -89,6 +103,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
+        case BSP_WRD:
+            if (record->event.pressed) {
+                tap_code16(word_mod_bspc());
+            }
+            return false;
+
         case MAGIC_SHIFT:
             if (record->tap.count && record->event.pressed) {
                 if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {

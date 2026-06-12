@@ -23,6 +23,10 @@ enum tap_dances {
     NAV_RGHT,
     NAV_BSPC,
     NAV_DEL};
+
+enum custom_keycodes {
+    BSP_WRD = SAFE_RANGE,
+};
 // clang-format on
 
 // Thumb cluster keys
@@ -62,7 +66,6 @@ enum tap_dances {
 #define MT_RBRC LALT_T(KC_RBRC)
 
 #define CMD_GRV LCMD(KC_GRV)
-#define BSP_WRD LALT(KC_BSPC)
 
 #define OSM_GUI OSM(MOD_LGUI)
 #define OSM_CTL OSM(MOD_LCTL)
