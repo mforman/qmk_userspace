@@ -14,9 +14,14 @@ docker run --rm \
   -e QMK_USERSPACE=/qmk_userspace \
   ghcr.io/qmk/qmk_cli \
   bash -c "git config --global --add safe.directory /qmk_firmware && \
-           make -r -R -C /qmk_firmware -f builddefs/build_keyboard.mk all \
+           git config --global --add safe.directory /qmk_firmware/lib/chibios && \
+           git config --global --add safe.directory /qmk_firmware/lib/chibios-contrib && \
+           git config --global --add safe.directory /qmk_userspace && \
+           make SILENT=true -r -R -C /qmk_firmware -f builddefs/build_keyboard.mk all \
            KEYBOARD=crkbd/rev1 KEYMAP=mforman QMK_BIN=qmk"
 ```
+
+**Pitfalls:** The `qmk_cli` Docker image uses `dash` as `/bin/sh`, which chokes on the `$(SILENT) ||` pattern in `common_rules.mk` unless `SILENT=true` is passed. The `safe.directory` entries for ChibiOS submodules are also required or the version-string step fails.
 
 Output: `qmk_firmware/.build/crkbd_rev1_mforman.uf2` (also copied to repo root).
 

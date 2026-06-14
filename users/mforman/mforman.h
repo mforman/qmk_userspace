@@ -5,16 +5,17 @@
 #include "eeprom.h"
 #include "version.h"
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 #    include "oled/oled.h"
 #endif
 
 // clang-format off
 enum keyboard_layers {
-    _COLEMAK = 0,
-    _LOWER,
-    _RAISE,
-    _ADJUST };
+    _COLEMAK = LAYER_COLEMAK,
+    _LOWER   = LAYER_LOWER,
+    _RAISE   = LAYER_RAISE,
+    _ADJUST  = LAYER_ADJUST,
+};
 
 enum tap_dances {
     NAV_UP,
@@ -145,9 +146,6 @@ enum custom_keycodes {
 #define ___________________BLANK___________________  _______, _______, _______, _______, _______
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
-void matrix_scan_keymap(void);
-void suspend_power_down_keymap(void);
-void suspend_wakeup_init_keymap(void);
 
 typedef struct {
     uint16_t tap;

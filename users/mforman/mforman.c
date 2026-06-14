@@ -8,12 +8,8 @@ static uint16_t last_alpha_keycode = KC_NO;
 
 #ifdef TAP_DANCE_ENABLE
 // clang-format off
-static uint16_t word_mod_bspc(void) {
-    return keymap_config.swap_lctl_lgui ? C(KC_BSPC) : A(KC_BSPC);
-}
-
-static uint16_t word_mod_del(void) {
-    return keymap_config.swap_lctl_lgui ? C(KC_DEL) : A(KC_DEL);
+static uint16_t word_mod_key(uint16_t kc) {
+    return keymap_config.swap_lctl_lgui ? C(kc) : A(kc);
 }
 
 void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data) {
@@ -27,9 +23,9 @@ void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data) {
         ) {
             uint16_t kc = tap_hold->hold;
             if (tap_hold->tap == KC_BSPC && kc == KC_NO) {
-                kc = word_mod_bspc();
+                kc = word_mod_key(KC_BSPC);
             } else if (tap_hold->tap == KC_DEL && kc == KC_NO) {
-                kc = word_mod_del();
+                kc = word_mod_key(KC_DEL);
             } else if (kc == KC_HOME || kc == KC_END) {
                 uint8_t saved_mods = get_mods() & MOD_MASK_CTRL;
                 del_mods(MOD_MASK_CTRL);
@@ -75,18 +71,12 @@ __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
     process_record_user_oled(keycode, record);
 #endif
     if (!process_record_keymap(keycode, record)) {
         return false;
     }
-
-#ifdef SWITCHER_ENABLE
-    if (!process_record_user_switcher(keycode, record)) {
-        return false;
-    }
-#endif
 
     // Track last alpha for magic-shift repeat logic.
     // Exclude MAGIC_SHIFT itself so its initial press (tap.count=0, tap_kc=KC_F24)
@@ -105,7 +95,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case BSP_WRD:
             if (record->event.pressed) {
-                tap_code16(word_mod_bspc());
+                tap_code16(word_mod_key(KC_BSPC));
             }
             return false;
 
@@ -143,40 +133,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-__attribute__((weak)) void suspend_power_down_keymap(void) {}
-
-void suspend_power_down_user(void) {
-// #ifdef OLED_ENABLE
-//     oled_off();
-// #endif
-    suspend_power_down_keymap();
-}
-
-__attribute__((weak)) void suspend_wakeup_init_keymap(void) {}
-
-void suspend_wakeup_init_user(void) {
-// #ifdef OLED_ENABLE
-//     oled_on();
-// #endif
-// #ifdef RGB_MATRIX_ENABLE
-//     rgb_matrix_set_suspend_state(false);
-// #endif
-    suspend_wakeup_init_keymap();
-}
-
-__attribute__((weak)) void matrix_scan_keymap(void) {}
-
-void matrix_scan_user(void) {
-    matrix_scan_keymap();
-}
-
-__attribute__((weak)) void eeconfig_init_keymap(void) {}
-
-__attribute__((weak)) layer_state_t layer_state_set_keymap(layer_state_t state) {
-    return state;
-}
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-    return layer_state_set_keymap(state);
-};
