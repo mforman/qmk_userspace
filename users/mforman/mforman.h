@@ -11,11 +11,10 @@
 
 // clang-format off
 enum keyboard_layers {
-    _COLEMAK = LAYER_COLEMAK,
-    _LOWER   = LAYER_LOWER,
-    _RAISE   = LAYER_RAISE,
-    _ADJUST  = LAYER_ADJUST,
-};
+    _COLEMAK = 0,
+    _LOWER,
+    _RAISE,
+    _ADJUST };
 
 enum tap_dances {
     NAV_UP,
