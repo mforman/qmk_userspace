@@ -21,7 +21,7 @@ docker run --rm \
            KEYBOARD=crkbd/rev1 KEYMAP=mforman QMK_BIN=qmk"
 ```
 
-**Pitfalls:** The `qmk_cli` Docker image uses `dash` as `/bin/sh`, which chokes on the `$(SILENT) ||` pattern in `common_rules.mk` unless `SILENT=true` is passed. The `safe.directory` entries for ChibiOS submodules are also required or the version-string step fails.
+**Pitfalls:** `SILENT=true` is **required** (not optional noise suppression) — the `qmk_cli` image uses `dash` as `/bin/sh`, which chokes on the `$(SILENT) ||` pattern in `common_rules.mk` without it. The `safe.directory` entries for ChibiOS submodules are also required or the version-string step fails.
 
 Output: `qmk_firmware/.build/crkbd_rev1_mforman.uf2` (also copied to repo root).
 
